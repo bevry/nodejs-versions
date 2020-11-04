@@ -1,6 +1,6 @@
 {
   "name": "@bevry/node-versions",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Fetch the Node.js releases and filter them to your preferences",
   "homepage": "https://github.com/bevry/node-versions",
   "license": "MIT",

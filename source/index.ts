@@ -59,14 +59,16 @@ export function datetime(when?: Date): number {
 	return now
 }
 
-// fetch
+/**
+ * Fetch the metadata for the various Node.js releases from the official source.
+ * https://github.com/nodejs/Release/pull/624
+ */
 export async function fetchNodeVersions(): Promise<Array<Key>> {
 	if (nodeVersionsMap.size) return nodeVersionsList
 	try {
 		// fetch node versions that have been released
 		const response = await fetch(url, {})
 		const json: Response = await response.json()
-		// https://github.com/nodejs/Release/pull/624
 		nodeVersionsMap.set('0.8', {
 			version: '0.8',
 			start: new Date('2012-06-25'),
@@ -105,7 +107,10 @@ export async function fetchNodeVersions(): Promise<Array<Key>> {
 	}
 }
 
-/** Get the release metadata for the version number */
+/**
+ * Get the release metadata for the version number.
+ * Requires {@link fetchNodeVersions} to have been previously awaited.
+ */
 export function getNodeVersion(version: Input): Meta {
 	const meta = nodeVersionsMap.get(String(version))
 	if (!meta)
@@ -113,6 +118,12 @@ export function getNodeVersion(version: Input): Meta {
 			`Unable to find the Node.js version: ${JSON.stringify(version)}`
 		)
 	return meta
+}
+
+/** Fetch the release metadata for the version number */
+export async function fetchNodeVersion(version: Input): Promise<Meta> {
+	await fetchNodeVersions()
+	return getNodeVersion(version)
 }
 
 /** Is the version of these versions? */
