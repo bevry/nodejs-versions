@@ -42,16 +42,16 @@ import { fetchAndFilterNodeVersions } from '@bevry/node-versions'
 // as of 2020-11-03
 
 // [ '10', '12', '14', '15' ]
-console.log(fetchAndFilterNodeVersions({ maintained: true }))
+console.log(await fetchAndFilterNodeVersions({ maintained: true }))
 
 // [ '15' ]
-console.log(fetchAndFilterNodeVersions({ current: true }))
+console.log(await fetchAndFilterNodeVersions({ current: true }))
 
 // [ '12', '14' ]
-console.log(fetchAndFilterNodeVersions({ active: true }))
+console.log(await fetchAndFilterNodeVersions({ active: true }))
 
 // [ '10' ]
-console.log(fetchAndFilterNodeVersions({ maintenance: true }))
+console.log(await fetchAndFilterNodeVersions({ maintenance: true }))
 ```
 
 <!-- INSTALL/ -->
