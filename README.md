@@ -38,20 +38,26 @@ Fetch the Node.js releases and filter them to your preferences
 [Complete API Documentation.](http://master.node-versions.bevry.surge.sh/docs/globals.html)
 
 ```typescript
-import { fetchAndFilterNodeVersions } from '@bevry/node-versions'
+import {
+    fetchAndFilterNodeVersions,
+    fetchESVersionsForNodeVersions,
+} from '@bevry/node-versions'
 // as of 2020-11-03
 
-// [ '10', '12', '14', '15' ]
 console.log(await fetchAndFilterNodeVersions({ maintained: true }))
+// [ '10', '12', '14', '15' ]
 
-// [ '15' ]
 console.log(await fetchAndFilterNodeVersions({ current: true }))
+// [ '15' ]
 
-// [ '12', '14' ]
 console.log(await fetchAndFilterNodeVersions({ active: true }))
+// [ '12', '14' ]
 
-// [ '10' ]
 console.log(await fetchAndFilterNodeVersions({ maintenance: true }))
+// [ '10' ]
+
+console.log(await fetchESVersionsForNodeVersions(['13', '14', '15']))
+// [ 'ES2019', 'ES2020' ]
 ```
 
 <!-- INSTALL/ -->
@@ -68,7 +74,7 @@ console.log(await fetchAndFilterNodeVersions({ maintenance: true }))
 <a href="https://deno.land" title="Deno is a secure runtime for JavaScript and TypeScript, it is an alternative for Node.js"><h3>Deno</h3></a>
 
 ``` typescript
-import * as pkg from 'https://unpkg.com/@bevry/node-versions@^1.0.1/edition-deno/index.ts'
+import * as pkg from 'https://unpkg.com/@bevry/node-versions@^1.1.0/edition-deno/index.ts'
 ```
 
 <h3><a href="https://editions.bevry.me" title="Editions are the best way to produce and consume packages you care about.">Editions</a></h3>

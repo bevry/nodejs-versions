@@ -1,6 +1,6 @@
 {
   "name": "@bevry/node-versions",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "description": "Fetch the Node.js releases and filter them to your preferences",
   "homepage": "https://github.com/bevry/node-versions",
   "license": "MIT",
@@ -144,10 +144,10 @@
       "require": "./edition-esnext/index.js"
     }
   },
-  "deno": "edition-deno/index.ts",
   "dependencies": {
     "@bevry/list": "^1.0.0",
     "errlop": "^4.1.0",
+    "es-versions": "^1.0.0",
     "node-fetch": "^2.6.1",
     "version-compare": "^1.1.0",
     "version-range": "^1.1.0"
@@ -207,5 +207,6 @@
     "semi": false,
     "singleQuote": true
   },
+  "deno": "edition-deno/index.ts",
   "contributors": []
 }

@@ -1,5 +1,9 @@
 # History
 
+## v1.1.0 2020 November 12
+
+-   Add `fetchESVersionForNodeVersion`, `getESVersionForNodeVersion`, `fetchESVersionForNodeVersions`, `getESVersionForNodeVersions`
+
 ## v1.0.1 2020 November 4
 
 -   Add documentation to `fetchNodeVersions`

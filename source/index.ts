@@ -5,6 +5,7 @@ import fetch from 'node-fetch'
 import Errlop from 'errlop'
 import withinRange from 'version-range'
 import versionCompare from 'version-compare'
+import { getDateWithYearOffset, getESVersion } from 'es-versions'
 import { last } from '@bevry/list'
 export { last } from '@bevry/list'
 
@@ -69,11 +70,6 @@ export async function fetchNodeVersions(): Promise<Array<Key>> {
 		// fetch node versions that have been released
 		const response = await fetch(url, {})
 		const json: Response = await response.json()
-		nodeVersionsMap.set('0.8', {
-			version: '0.8',
-			start: new Date('2012-06-25'),
-			end: new Date('2014-07-31'),
-		})
 		for (const [key, meta] of Object.entries(json)) {
 			const version = key.replace('v', '')
 			const start = new Date(meta.start)
@@ -113,10 +109,20 @@ export async function fetchNodeVersions(): Promise<Array<Key>> {
  */
 export function getNodeVersion(version: Input): Meta {
 	const meta = nodeVersionsMap.get(String(version))
-	if (!meta)
-		throw new Error(
-			`Unable to find the Node.js version: ${JSON.stringify(version)}`
-		)
+	if (!meta) {
+		if (nodeVersionsMap.size)
+			throw new Error(
+				`Unable to get the Node.js version [${JSON.stringify(
+					version
+				)}] probably because the Node.js versions have not been fetched yet.`
+			)
+		else
+			throw new Error(
+				`Unable to find the Node.js version in the cache: ${JSON.stringify(
+					version
+				)}`
+			)
+	}
 	return meta
 }
 
@@ -425,4 +431,46 @@ export function filterNodeVersions(
 export async function fetchAndFilterNodeVersions(filters: Filters) {
 	await fetchNodeVersions()
 	return filterNodeVersions(nodeVersionsList, filters)
+}
+
+/** Fetch the ratified ECMAScript version at the time of a Node.js version release. */
+export async function fetchESVersionForNodeVersion(
+	nodeVersion: Input
+): Promise<string> {
+	const meta = await fetchNodeVersion(nodeVersion)
+	return getESVersion(meta.start)
+}
+
+/** Get the ratified ECMAScript version at the time of a Node.js version release. */
+export function getESVersionForNodeVersion(nodeVersion: Input): string {
+	const meta = getNodeVersion(nodeVersion)
+	return getESVersion(meta.start)
+}
+
+/**
+ * For each provided Node.js version, fetch its ECMAScript version, and return the list without duplicates.
+ * @returns ECMAScript versions sorted from oldest to newest.
+ */
+export async function fetchESVersionsForNodeVersions(
+	nodeVersions: Array<Input>
+): Promise<Array<string>> {
+	const versions = new Set<string>()
+	for (const nodeVersion of nodeVersions.sort(versionCompare)) {
+		versions.add(await fetchESVersionForNodeVersion(nodeVersion))
+	}
+	return Array.from(versions.values())
+}
+
+/**
+ * For each provided Node.js version, fetch its ECMAScript version, and return the list without duplicates.
+ * @returns ECMAScript versions sorted from oldest to newest.
+ */
+export function getESVersionsForNodeVersions(
+	nodeVersions: Array<Input>
+): Array<string> {
+	const versions = new Set<string>()
+	for (const nodeVersion of nodeVersions.sort(versionCompare)) {
+		versions.add(getESVersionForNodeVersion(nodeVersion))
+	}
+	return Array.from(versions.values())
 }

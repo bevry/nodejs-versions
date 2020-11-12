@@ -9,6 +9,7 @@ import {
 	fetchNodeVersions,
 	getNodeVersionStatus,
 	filterNodeVersions,
+	getESVersionsForNodeVersions,
 } from './index.js'
 
 // set a consistent datetime
@@ -258,6 +259,11 @@ kava.suite('@bevry/node-versions', function (suite, test) {
 	test('range', function () {
 		const expected = ['0.8', '0.10', '0.12']
 		const actual = filterNodeVersions(remoteVersions, { range: '<4' })
+		equal(actual.join(', '), expected.join(', '))
+	})
+	test('es-versions', function () {
+		const expected = ['ES2019', 'ES2020']
+		const actual = getESVersionsForNodeVersions(['15', '14', '13'])
 		equal(actual.join(', '), expected.join(', '))
 	})
 })
