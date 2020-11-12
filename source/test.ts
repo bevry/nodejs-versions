@@ -208,6 +208,7 @@ kava.suite('@bevry/node-versions', function (suite, test) {
 				// get flags
 				const actual = getNodeVersionStatus(version)
 				// log for the user
+				// eslint-disable-next-line no-console
 				console.log(version, actual)
 				deepEqual(actual, fixtures[version], 'status was as expected')
 				for (const [flag, result] of Object.entries(actual)) {
@@ -233,6 +234,7 @@ kava.suite('@bevry/node-versions', function (suite, test) {
 				`${flag} results were as expected`
 			)
 			// log for the user
+			// eslint-disable-next-line no-console
 			console.log(flag, actual)
 		}
 	})
