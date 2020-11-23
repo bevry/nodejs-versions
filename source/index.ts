@@ -448,7 +448,7 @@ export function getESVersionForNodeVersion(nodeVersion: Input): string {
 }
 
 /**
- * For each provided Node.js version, fetch its ECMAScript version, and return the list without duplicates.
+ * For each provided Node.js version (sorted by oldest first to newest last), fetch their ECMAScript version, and return the list without duplicates.
  * @returns ECMAScript versions sorted from oldest to newest.
  */
 export async function fetchESVersionsForNodeVersions(
@@ -462,7 +462,7 @@ export async function fetchESVersionsForNodeVersions(
 }
 
 /**
- * For each provided Node.js version, fetch its ECMAScript version, and return the list without duplicates.
+ * For each provided Node.js version (sorted by oldest first to newest last), fetch their ECMAScript version, and return the list without duplicates.
  * @returns ECMAScript versions sorted from oldest to newest.
  */
 export function getESVersionsForNodeVersions(
