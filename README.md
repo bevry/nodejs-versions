@@ -1,15 +1,15 @@
 <!-- TITLE/ -->
 
-<h1>@bevry/node-versions</h1>
+<h1>@bevry/nodejs-versions</h1>
 
 <!-- /TITLE -->
 
 
 <!-- BADGES/ -->
 
-<span class="badge-travisci"><a href="http://travis-ci.com/bevry/node-versions" title="Check this project's build status on TravisCI"><img src="https://img.shields.io/travis/com/bevry/node-versions/master.svg" alt="Travis CI Build Status" /></a></span>
-<span class="badge-npmversion"><a href="https://npmjs.org/package/@bevry/node-versions" title="View this project on NPM"><img src="https://img.shields.io/npm/v/@bevry/node-versions.svg" alt="NPM version" /></a></span>
-<span class="badge-npmdownloads"><a href="https://npmjs.org/package/@bevry/node-versions" title="View this project on NPM"><img src="https://img.shields.io/npm/dm/@bevry/node-versions.svg" alt="NPM downloads" /></a></span>
+<span class="badge-githubworkflow"><a href="https://github.com/bevry/node-versions/actions?query=workflow%3Abevry" title="View the status of this project's GitHub Workflow: bevry"><img src="https://github.com/bevry/node-versions/workflows/bevry/badge.svg" alt="Status of the GitHub Workflow: bevry" /></a></span>
+<span class="badge-npmversion"><a href="https://npmjs.org/package/@bevry/nodejs-versions" title="View this project on NPM"><img src="https://img.shields.io/npm/v/@bevry/nodejs-versions.svg" alt="NPM version" /></a></span>
+<span class="badge-npmdownloads"><a href="https://npmjs.org/package/@bevry/nodejs-versions" title="View this project on NPM"><img src="https://img.shields.io/npm/dm/@bevry/nodejs-versions.svg" alt="NPM downloads" /></a></span>
 <span class="badge-daviddm"><a href="https://david-dm.org/bevry/node-versions" title="View the status of this project's dependencies on DavidDM"><img src="https://img.shields.io/david/bevry/node-versions.svg" alt="Dependency Status" /></a></span>
 <span class="badge-daviddmdev"><a href="https://david-dm.org/bevry/node-versions#info=devDependencies" title="View the status of this project's development dependencies on DavidDM"><img src="https://img.shields.io/david/dev/bevry/node-versions.svg" alt="Dev Dependency Status" /></a></span>
 <br class="badge-separator" />
@@ -28,36 +28,48 @@
 
 <!-- DESCRIPTION/ -->
 
-Fetch the Node.js releases and filter them to your preferences
+Filter the absolute or significant Node.js versions by vast amounts of criteria, such as LTS status.
 
 <!-- /DESCRIPTION -->
 
 
 ## Usage
 
-[Complete API Documentation.](http://master.node-versions.bevry.surge.sh/docs/globals.html)
+[Complete API Documentation.](http://master.nodejs-versions.bevry.surge.sh/docs/globals.html)
 
 ```typescript
 import {
-    fetchAndFilterNodeVersions,
-    fetchESVersionsForNodeVersions,
-} from '@bevry/node-versions'
-// as of 2020-11-03
+    preloadNodeVersions,
+    filterSignificantNodeVersions,
+    filterAbsoluteNodeVersions,
+    filterNodeVersions,
+} from '@bevry/nodejs-versions'
 
-console.log(await fetchAndFilterNodeVersions({ maintained: true }))
-// [ '10', '12', '14', '15' ]
+// Required for filters that use the Node.js Schedule or Releases API,
+// or for prefetching of absolute and significant Node.js versions.
+await preloadNodeVersions()
 
-console.log(await fetchAndFilterNodeVersions({ current: true }))
-// [ '15' ]
+console.log(filterSignificantNodeVersions({ maintained: true }))
+// e.g. [ '12', '14', '16' ]
 
-console.log(await fetchAndFilterNodeVersions({ active: true }))
-// [ '12', '14' ]
+console.log(filterSignificantNodeVersions({ current: true }))
+// e.g. [ '16' ]
 
-console.log(await fetchAndFilterNodeVersions({ maintenance: true }))
-// [ '10' ]
+console.log(filterSignificantNodeVersions({ active: true }))
+// e.g. [ '14' ]
 
-console.log(await fetchESVersionsForNodeVersions(['13', '14', '15']))
-// [ 'ES2019', 'ES2020' ]
+console.log(filterSignificantNodeVersions({ maintenance: true }))
+// e.g. [ '12' ]
+
+console.log(filterAbsoluteNodeVersions({ current: true }))
+// e.g. [ '16.0.0', '16.1.0', '16.2.0', '16.3.0', '16.4.0', '16.4.1', '16.4.2', '16.5.0' ]
+
+console.log(filterNodeVersions(['12', '14', '16'], { current: true }))
+// e.g. [ '16' ]
+
+// The above example results were current as of 2021-07-27
+
+// More filters are available via the [Complete API Documentation] link earlier.
 ```
 
 <!-- INSTALL/ -->
@@ -66,26 +78,19 @@ console.log(await fetchESVersionsForNodeVersions(['13', '14', '15']))
 
 <a href="https://npmjs.com" title="npm is a package manager for javascript"><h3>npm</h3></a>
 <ul>
-<li>Install: <code>npm install --save @bevry/node-versions</code></li>
-<li>Import: <code>import * as pkg from ('@bevry/node-versions')</code></li>
-<li>Require: <code>const pkg = require('@bevry/node-versions')</code></li>
+<li>Install: <code>npm install --save @bevry/nodejs-versions</code></li>
+<li>Import: <code>import * as pkg from ('@bevry/nodejs-versions')</code></li>
+<li>Require: <code>const pkg = require('@bevry/nodejs-versions')</code></li>
 </ul>
-
-<a href="https://deno.land" title="Deno is a secure runtime for JavaScript and TypeScript, it is an alternative for Node.js"><h3>Deno</h3></a>
-
-``` typescript
-import * as pkg from 'https://unpkg.com/@bevry/node-versions@^1.1.0/edition-deno/index.ts'
-```
 
 <h3><a href="https://editions.bevry.me" title="Editions are the best way to produce and consume packages you care about.">Editions</a></h3>
 
 <p>This package is published with the following editions:</p>
 
-<ul><li><code>@bevry/node-versions/source/index.ts</code> is <a href="https://www.typescriptlang.org/" title="TypeScript is a typed superset of JavaScript that compiles to plain JavaScript. ">TypeScript</a> source code with <a href="https://babeljs.io/docs/learn-es2015/#modules" title="ECMAScript Modules">Import</a> for modules</li>
-<li><code>@bevry/node-versions</code> aliases <code>@bevry/node-versions/edition-esnext/index.js</code></li>
-<li><code>@bevry/node-versions/edition-esnext/index.js</code> is <a href="https://www.typescriptlang.org/" title="TypeScript is a typed superset of JavaScript that compiles to plain JavaScript. ">TypeScript</a> compiled against <a href="https://en.wikipedia.org/wiki/ECMAScript#ES.Next" title="ECMAScript Next">ESNext</a> for <a href="https://nodejs.org" title="Node.js is a JavaScript runtime built on Chrome's V8 JavaScript engine">Node.js</a> 10 || 12 || 14 || 15 with <a href="https://nodejs.org/dist/latest-v5.x/docs/api/modules.html" title="Node/CJS Modules">Require</a> for modules</li>
-<li><code>@bevry/node-versions/edition-esnext-esm/index.js</code> is <a href="https://www.typescriptlang.org/" title="TypeScript is a typed superset of JavaScript that compiles to plain JavaScript. ">TypeScript</a> compiled against <a href="https://en.wikipedia.org/wiki/ECMAScript#ES.Next" title="ECMAScript Next">ESNext</a> for <a href="https://nodejs.org" title="Node.js is a JavaScript runtime built on Chrome's V8 JavaScript engine">Node.js</a> 12 || 14 || 15 with <a href="https://babeljs.io/docs/learn-es2015/#modules" title="ECMAScript Modules">Import</a> for modules</li>
-<li><code>@bevry/node-versions/edition-deno/index.ts</code> is <a href="https://www.typescriptlang.org/" title="TypeScript is a typed superset of JavaScript that compiles to plain JavaScript. ">TypeScript</a> source code made to be compatible with <a href="https://deno.land" title="Deno is a secure runtime for JavaScript and TypeScript, it is an alternative to Node.js">Deno</a></li></ul>
+<ul><li><code>@bevry/nodejs-versions/source/index.ts</code> is <a href="https://www.typescriptlang.org/" title="TypeScript is a typed superset of JavaScript that compiles to plain JavaScript. ">TypeScript</a> source code with <a href="https://babeljs.io/docs/learn-es2015/#modules" title="ECMAScript Modules">Import</a> for modules</li>
+<li><code>@bevry/nodejs-versions</code> aliases <code>@bevry/nodejs-versions/edition-es2020/index.js</code></li>
+<li><code>@bevry/nodejs-versions/edition-es2020/index.js</code> is <a href="https://www.typescriptlang.org/" title="TypeScript is a typed superset of JavaScript that compiles to plain JavaScript. ">TypeScript</a> compiled against <a href="https://en.wikipedia.org/wiki/ECMAScript#11th_Edition_–_ECMAScript_2020" title="ECMAScript ES2020">ES2020</a> for <a href="https://nodejs.org" title="Node.js is a JavaScript runtime built on Chrome's V8 JavaScript engine">Node.js</a> 10 || 12 || 14 with <a href="https://nodejs.org/dist/latest-v5.x/docs/api/modules.html" title="Node/CJS Modules">Require</a> for modules</li>
+<li><code>@bevry/nodejs-versions/edition-es2020-esm/index.js</code> is <a href="https://www.typescriptlang.org/" title="TypeScript is a typed superset of JavaScript that compiles to plain JavaScript. ">TypeScript</a> compiled against <a href="https://en.wikipedia.org/wiki/ECMAScript#11th_Edition_–_ECMAScript_2020" title="ECMAScript ES2020">ES2020</a> for <a href="https://nodejs.org" title="Node.js is a JavaScript runtime built on Chrome's V8 JavaScript engine">Node.js</a> 12 || 14 with <a href="https://babeljs.io/docs/learn-es2015/#modules" title="ECMAScript Modules">Import</a> for modules</li></ul>
 
 <!-- /INSTALL -->
 

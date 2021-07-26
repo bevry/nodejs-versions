@@ -6,10 +6,11 @@ import {
 	isNodeVersion,
 	datetime,
 	Filters,
-	fetchNodeVersions,
+	preloadNodeVersions,
 	getNodeVersionStatus,
 	filterNodeVersions,
-	getESVersionsForNodeVersions,
+	filterSignificantNodeVersions,
+	filterAbsoluteNodeVersions,
 } from './index.js'
 
 // set a consistent datetime
@@ -149,7 +150,7 @@ const fixtures: { [key: string]: Filters } = {
 		maintainedOrLTS: true,
 		maintenance: false,
 		released: true,
-		vercel: false,
+		vercel: true,
 	},
 	'15': {
 		active: false,
@@ -191,15 +192,12 @@ const results: { [flag: string]: Array<string> } = {}
 // nv.isNodeVersionLTE
 // nv.isNodeVersionThese
 
-kava.suite('@bevry/node-versions', function (suite, test) {
+kava.suite('@bevry/nodejs-versions', function (suite, test) {
 	const fixtureVersions = Object.keys(fixtures).sort(versionCompare)
-	let remoteVersions: Array<string>
-	test('fetch', function (done) {
-		fetchNodeVersions()
-			.then((versions) => {
-				remoteVersions = versions
-				done()
-			})
+	test('preload', function (done) {
+		Promise.resolve()
+			.then(() => preloadNodeVersions())
+			.then(() => done())
 			.catch(done)
 	})
 	suite('individual filtering', function (suite, test) {
@@ -240,32 +238,35 @@ kava.suite('@bevry/node-versions', function (suite, test) {
 	})
 	test('these', function () {
 		const expected = ['4', '8']
-		const actual = filterNodeVersions(remoteVersions, { these: ['4', '8'] })
+		const actual = filterSignificantNodeVersions({ these: ['4', '8'] })
 		equal(actual.join(', '), expected.join(', '))
 	})
 	test('between', function () {
 		const expected = ['4', '5', '6', '7', '8']
-		const actual = filterNodeVersions(remoteVersions, { between: ['4', '8'] })
+		const actual = filterSignificantNodeVersions({ between: ['4', '8'] })
 		equal(actual.join(', '), expected.join(', '))
 	})
 	test('lte', function () {
 		const expected = ['0.8', '0.10', '0.12', '4']
-		const actual = filterNodeVersions(remoteVersions, { lte: '4' })
+		const actual = filterSignificantNodeVersions({ lte: '4' })
 		equal(actual.join(', '), expected.join(', '))
 	})
 	test('gte+lte', function () {
 		const expected = ['0.12', '4']
-		const actual = filterNodeVersions(remoteVersions, { lte: '4', gte: '0.12' })
+		const actual = filterSignificantNodeVersions({ lte: '4', gte: '0.12' })
 		equal(actual.join(', '), expected.join(', '))
 	})
 	test('range', function () {
 		const expected = ['0.8', '0.10', '0.12']
-		const actual = filterNodeVersions(remoteVersions, { range: '<4' })
+		const actual = filterSignificantNodeVersions({ range: '<4' })
 		equal(actual.join(', '), expected.join(', '))
 	})
-	test('es-versions', function () {
-		const expected = ['ES2019', 'ES2020']
-		const actual = getESVersionsForNodeVersions(['15', '14', '13'])
+	test('these - absolute', function () {
+		const expected = ['15.0.0', '15.0.1']
+		const actual = filterAbsoluteNodeVersions({
+			these: ['15'],
+			released: true,
+		})
 		equal(actual.join(', '), expected.join(', '))
 	})
 })
