@@ -1,8 +1,8 @@
 {
   "name": "@bevry/nodejs-versions",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "description": "Filter the absolute or significant Node.js versions by vast amounts of criteria, such as LTS status.",
-  "homepage": "https://github.com/bevry/node-versions",
+  "homepage": "https://github.com/bevry/nodejs-versions",
   "license": "MIT",
   "keywords": [
     "active",
@@ -10,7 +10,7 @@
     "devop",
     "devops",
     "end",
-    "es2020",
+    "es2019",
     "fetch",
     "filter",
     "lts",
@@ -59,22 +59,22 @@
       "paypalURL": "https://bevry.me/paypal",
       "wishlistURL": "https://bevry.me/wishlist",
       "githubUsername": "bevry",
-      "githubRepository": "node-versions",
-      "githubSlug": "bevry/node-versions",
+      "githubRepository": "nodejs-versions",
+      "githubSlug": "bevry/nodejs-versions",
       "npmPackageName": "@bevry/nodejs-versions"
     }
   },
   "funding": "https://bevry.me/fund",
-  "author": "2020+ Benjamin Lupton <b@lupton.cc> (https://github.com/balupton)",
+  "author": "2020+ Benjamin Lupton <b@lupton.cc> (https://balupton.com)",
   "maintainers": [
     "Benjamin Lupton <b@lupton.cc> (https://github.com/balupton)"
   ],
   "bugs": {
-    "url": "https://github.com/bevry/node-versions/issues"
+    "url": "https://github.com/bevry/nodejs-versions/issues"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/bevry/node-versions.git"
+    "url": "https://github.com/bevry/nodejs-versions.git"
   },
   "engines": {
     "node": ">=10"
@@ -92,13 +92,13 @@
       "engines": false
     },
     {
-      "description": "TypeScript compiled against ES2020 for Node.js 10 || 12 || 14 with Require for modules",
-      "directory": "edition-es2020",
+      "description": "TypeScript compiled against ES2019 for Node.js 10 || 12 || 14 with Require for modules",
+      "directory": "edition-es2019",
       "entry": "index.js",
       "tags": [
         "compiled",
         "javascript",
-        "es2020",
+        "es2019",
         "require"
       ],
       "engines": {
@@ -107,13 +107,13 @@
       }
     },
     {
-      "description": "TypeScript compiled against ES2020 for Node.js 12 || 14 with Import for modules",
-      "directory": "edition-es2020-esm",
+      "description": "TypeScript compiled against ES2019 for Node.js 12 || 14 with Import for modules",
+      "directory": "edition-es2019-esm",
       "entry": "index.js",
       "tags": [
         "compiled",
         "javascript",
-        "es2020",
+        "es2019",
         "import"
       ],
       "engines": {
@@ -124,15 +124,15 @@
   ],
   "types": "./compiled-types/",
   "type": "module",
-  "main": "edition-es2020/index.js",
+  "main": "edition-es2019/index.js",
   "exports": {
     "node": {
-      "import": "./edition-es2020-esm/index.js",
-      "require": "./edition-es2020/index.js"
+      "import": "./edition-es2019-esm/index.js",
+      "require": "./edition-es2019/index.js"
     }
   },
   "dependencies": {
-    "@bevry/list": "^1.0.0",
+    "@bevry/list": "^1.3.0",
     "@bevry/nodejs-releases": "^1.0.0",
     "@bevry/nodejs-schedule": "^1.1.0",
     "version-compare": "^1.2.0",
@@ -142,26 +142,26 @@
     "@bevry/update-contributors": "^1.18.0",
     "@typescript-eslint/eslint-plugin": "^4.28.5",
     "@typescript-eslint/parser": "^4.28.5",
-    "assert-helpers": "^8.1.0",
+    "assert-helpers": "^8.2.0",
     "eslint": "^7.31.0",
     "eslint-config-bevry": "^3.23.0",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-prettier": "^3.4.0",
-    "kava": "^5.13.0",
+    "kava": "^5.14.0",
     "make-deno-edition": "^1.3.0",
     "prettier": "^2.3.2",
     "projectz": "^2.18.0",
     "surge": "^0.23.0",
     "typedoc": "^0.21.4",
     "typescript": "4.3.5",
-    "valid-directory": "^3.6.0"
+    "valid-directory": "^3.7.0"
   },
   "scripts": {
     "our:clean": "rm -Rf ./docs ./edition* ./es2015 ./es5 ./out ./.next",
-    "our:compile": "npm run our:compile:deno && npm run our:compile:edition-es2020 && npm run our:compile:edition-es2020-esm && npm run our:compile:types",
+    "our:compile": "npm run our:compile:deno && npm run our:compile:edition-es2019 && npm run our:compile:edition-es2019-esm && npm run our:compile:types",
     "our:compile:deno": "make-deno-edition --attempt",
-    "our:compile:edition-es2020": "tsc --module commonjs --target ES2020 --outDir ./edition-es2020 --project tsconfig.json && ( test ! -d edition-es2020/source || ( mv edition-es2020/source edition-temp && rm -Rf edition-es2020 && mv edition-temp edition-es2020 ) ) && echo '{\"type\": \"commonjs\"}' > edition-es2020/package.json",
-    "our:compile:edition-es2020-esm": "tsc --module ESNext --target ES2020 --outDir ./edition-es2020-esm --project tsconfig.json && ( test ! -d edition-es2020-esm/source || ( mv edition-es2020-esm/source edition-temp && rm -Rf edition-es2020-esm && mv edition-temp edition-es2020-esm ) ) && echo '{\"type\": \"module\"}' > edition-es2020-esm/package.json",
+    "our:compile:edition-es2019": "tsc --module commonjs --target ES2019 --outDir ./edition-es2019 --project tsconfig.json && ( test ! -d edition-es2019/source || ( mv edition-es2019/source edition-temp && rm -Rf edition-es2019 && mv edition-temp edition-es2019 ) ) && echo '{\"type\": \"commonjs\"}' > edition-es2019/package.json",
+    "our:compile:edition-es2019-esm": "tsc --module ESNext --target ES2019 --outDir ./edition-es2019-esm --project tsconfig.json && ( test ! -d edition-es2019-esm/source || ( mv edition-es2019-esm/source edition-temp && rm -Rf edition-es2019-esm && mv edition-temp edition-es2019-esm ) ) && echo '{\"type\": \"module\"}' > edition-es2019-esm/package.json",
     "our:compile:types": "tsc --project tsconfig.json --emitDeclarationOnly --declaration --declarationMap --declarationDir ./compiled-types && ( test ! -d compiled-types/source || ( mv compiled-types/source edition-temp && rm -Rf compiled-types && mv edition-temp compiled-types ) )",
     "our:deploy": "echo no need for this project",
     "our:meta": "npm run our:meta:contributors && npm run our:meta:docs && npm run our:meta:projectz",
@@ -182,7 +182,7 @@
     "our:verify:directory": "valid-directory",
     "our:verify:eslint": "eslint --fix --ignore-pattern '**/*.d.ts' --ignore-pattern '**/vendor/' --ignore-pattern '**/node_modules/' --ext .mjs,.js,.jsx,.ts,.tsx ./source",
     "our:verify:prettier": "prettier --write .",
-    "test": "node ./edition-es2020/test.js"
+    "test": "node ./edition-es2019/test.js"
   },
   "eslintConfig": {
     "extends": [
@@ -193,5 +193,7 @@
     "semi": false,
     "singleQuote": true
   },
-  "contributors": []
+  "contributors": [
+    "Benjamin Lupton <b@lupton.cc> (https://github.com/balupton)"
+  ]
 }
