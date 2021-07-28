@@ -1,6 +1,6 @@
 {
   "name": "@bevry/nodejs-versions",
-  "version": "2.1.0",
+  "version": "2.2.0",
   "description": "Filter the absolute or significant Node.js versions by vast amounts of criteria, such as LTS status.",
   "homepage": "https://github.com/bevry/nodejs-versions",
   "license": "MIT",
@@ -69,6 +69,9 @@
   "maintainers": [
     "Benjamin Lupton <b@lupton.cc> (https://github.com/balupton)"
   ],
+  "contributors": [
+    "Benjamin Lupton <b@lupton.cc> (https://github.com/balupton)"
+  ],
   "bugs": {
     "url": "https://github.com/bevry/nodejs-versions/issues"
   },
@@ -92,7 +95,7 @@
       "engines": false
     },
     {
-      "description": "TypeScript compiled against ES2019 for Node.js 10 || 12 || 14 with Require for modules",
+      "description": "TypeScript compiled against ES2019 for Node.js 10 || 12 || 14 || 16 with Require for modules",
       "directory": "edition-es2019",
       "entry": "index.js",
       "tags": [
@@ -102,12 +105,12 @@
         "require"
       ],
       "engines": {
-        "node": "10 || 12 || 14",
+        "node": "10 || 12 || 14 || 16",
         "browsers": false
       }
     },
     {
-      "description": "TypeScript compiled against ES2019 for Node.js 12 || 14 with Import for modules",
+      "description": "TypeScript compiled against ES2019 for Node.js 12 || 14 || 16 with Import for modules",
       "directory": "edition-es2019-esm",
       "entry": "index.js",
       "tags": [
@@ -117,7 +120,7 @@
         "import"
       ],
       "engines": {
-        "node": "12 || 14",
+        "node": "12 || 14 || 16",
         "browsers": false
       }
     }
@@ -133,24 +136,24 @@
   },
   "dependencies": {
     "@bevry/list": "^1.3.0",
-    "@bevry/nodejs-releases": "^1.0.0",
-    "@bevry/nodejs-schedule": "^1.1.0",
+    "@bevry/nodejs-releases": "^1.2.0",
+    "@bevry/nodejs-schedule": "^1.2.0",
     "version-compare": "^1.2.0",
     "version-range": "^1.2.0"
   },
   "devDependencies": {
-    "@bevry/update-contributors": "^1.18.0",
+    "@bevry/update-contributors": "^1.19.0",
     "@typescript-eslint/eslint-plugin": "^4.28.5",
     "@typescript-eslint/parser": "^4.28.5",
     "assert-helpers": "^8.2.0",
     "eslint": "^7.31.0",
-    "eslint-config-bevry": "^3.23.0",
+    "eslint-config-bevry": "^3.25.0",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-prettier": "^3.4.0",
     "kava": "^5.14.0",
     "make-deno-edition": "^1.3.0",
     "prettier": "^2.3.2",
-    "projectz": "^2.18.0",
+    "projectz": "^2.19.0",
     "surge": "^0.23.0",
     "typedoc": "^0.21.4",
     "typescript": "4.3.5",
@@ -192,8 +195,5 @@
   "prettier": {
     "semi": false,
     "singleQuote": true
-  },
-  "contributors": [
-    "Benjamin Lupton <b@lupton.cc> (https://github.com/balupton)"
-  ]
+  }
 }
