@@ -35,7 +35,7 @@ Filter the absolute or significant Node.js versions by vast amounts of criteria,
 
 ## Usage
 
-[Complete API Documentation.](http://master.nodejs-versions.bevry.surge.sh/docs/globals.html)
+[Complete API Documentation.](http://master.nodejs-versions.bevry.surge.sh/docs/)
 
 ```typescript
 import {
