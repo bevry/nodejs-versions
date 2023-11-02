@@ -40,7 +40,7 @@ export function isAbsoluteVersion(version: NodeVersionInput): boolean {
 
 /** Helper to return `false` if the Node.js version does not exist in the schedule (prior to 0.8, or say 0.9, or 0.11) */
 export function getNodeScheduleInformationSafe(
-	version: NodeScheduleInput
+	version: NodeScheduleInput,
 ): NodeScheduleInformation | false {
 	if (
 		versionCompare(version, '0.8') === -1 ||
@@ -73,7 +73,7 @@ export async function preloadNodeVersions(): Promise<void> {
 	nodeVersionLatestCurrent = last(nodeVersionsList.filter(isNodeVersionCurrent))
 	nodeVersionLatestActive = last(nodeVersionsList.filter(isNodeVersionActive))
 	nodeVersionLatestMaintenance = last(
-		nodeVersionsList.filter(isNodeVersionMaintenance)
+		nodeVersionsList.filter(isNodeVersionMaintenance),
 	)
 }
 
@@ -98,7 +98,7 @@ export function datetime(when?: Date): number {
 /** Is the version of these versions? */
 export function isNodeVersionThese(
 	version: NodeVersionInput,
-	these: Array<NodeVersionInput>
+	these: Array<NodeVersionInput>,
 ): boolean {
 	return Boolean(these.find((seek) => versionCompare(version, seek) === 0))
 }
@@ -106,7 +106,7 @@ export function isNodeVersionThese(
 /** Is the version within (inclusive) of these two versions? */
 export function isNodeVersionBetween(
 	version: NodeVersionInput,
-	tuple: [gte: NodeVersionInput, lte: NodeVersionInput]
+	tuple: [gte: NodeVersionInput, lte: NodeVersionInput],
 ): boolean {
 	return (
 		versionCompare(version, tuple[0]) >= 0 &&
@@ -122,7 +122,7 @@ export function isNodeVersionBetween(
 export function isNodeVersionLatestActive(version: NodeVersionInput): boolean {
 	if (nodeVersionLatestActive == null)
 		throw new Error(
-			'You must await [preloadNodeVersions] prior to using the [isNodeVersionLatestActive] filter.'
+			'You must await [preloadNodeVersions] prior to using the [isNodeVersionLatestActive] filter.',
 		)
 	return versionCompare(version, nodeVersionLatestActive) === 0
 }
@@ -135,7 +135,7 @@ export function isNodeVersionLatestActive(version: NodeVersionInput): boolean {
 export function isNodeVersionLatestCurrent(version: NodeVersionInput): boolean {
 	if (nodeVersionLatestCurrent == null)
 		throw new Error(
-			'You must await [preloadNodeVersions] prior to using the [isNodeVersionLatestCurrent] filter.'
+			'You must await [preloadNodeVersions] prior to using the [isNodeVersionLatestCurrent] filter.',
 		)
 	return versionCompare(version, nodeVersionLatestCurrent) === 0
 }
@@ -146,11 +146,11 @@ export function isNodeVersionLatestCurrent(version: NodeVersionInput): boolean {
  * Uses the Node.js Schedule API to determine this.
  */
 export function isNodeVersionLatestMaintenance(
-	version: NodeVersionInput
+	version: NodeVersionInput,
 ): boolean {
 	if (nodeVersionLatestMaintenance == null)
 		throw new Error(
-			'You must await [preloadNodeVersions] prior to using the [isNodeVersionLatestMaintenance] filter.'
+			'You must await [preloadNodeVersions] prior to using the [isNodeVersionLatestMaintenance] filter.',
 		)
 	return versionCompare(version, nodeVersionLatestMaintenance) === 0
 }
@@ -158,7 +158,7 @@ export function isNodeVersionLatestMaintenance(
 /** Is the version lesser than or equal to the seek version? */
 export function isNodeVersionLTE(
 	version: NodeVersionInput,
-	seek: NodeVersionInput
+	seek: NodeVersionInput,
 ): boolean {
 	return versionCompare(version, seek) <= 0
 }
@@ -166,7 +166,7 @@ export function isNodeVersionLTE(
 /** Is the version greater than or equal to the seek version? */
 export function isNodeVersionGTE(
 	version: NodeVersionInput,
-	seek: NodeVersionInput
+	seek: NodeVersionInput,
 ): boolean {
 	return versionCompare(version, seek) >= 0
 }
@@ -174,7 +174,7 @@ export function isNodeVersionGTE(
 /** Is the version within this range? */
 export function isNodeVersionWithinRange(
 	version: NodeVersionInput,
-	range: string
+	range: string,
 ): boolean {
 	return withinRange(version, range)
 }
@@ -187,7 +187,7 @@ export function isNodeVersionWithinRange(
 export function isNodeVersionActive(version: NodeVersionInput): boolean {
 	if (preloaded === false)
 		throw new Error(
-			'You must await [preloadNodeVersions] prior to using the [isNodeVersionActive] filter.'
+			'You must await [preloadNodeVersions] prior to using the [isNodeVersionActive] filter.',
 		)
 	if (isAbsoluteVersion(version)) {
 		const lts = getNodeReleaseInformation(version).lts
@@ -208,11 +208,11 @@ export function isNodeVersionActive(version: NodeVersionInput): boolean {
  * Uses the Node.js Schedule API to determine this.
  */
 export function isNodeVersionActiveOrCurrent(
-	version: NodeScheduleInput
+	version: NodeScheduleInput,
 ): boolean {
 	if (preloaded === false)
 		throw new Error(
-			'You must await [preloadNodeVersions] prior to using the [isNodeVersionActiveOrCurrent] filter.'
+			'You must await [preloadNodeVersions] prior to using the [isNodeVersionActiveOrCurrent] filter.',
 		)
 	const meta = getNodeScheduleInformationSafe(version)
 	if (meta === false) return false
@@ -230,7 +230,7 @@ export function isNodeVersionActiveOrCurrent(
 export function isNodeVersionReleased(version: NodeVersionInput): boolean {
 	if (preloaded === false)
 		throw new Error(
-			'You must await [preloadNodeVersions] prior to using the [isNodeVersionReleased] filter.'
+			'You must await [preloadNodeVersions] prior to using the [isNodeVersionReleased] filter.',
 		)
 	let date: Date
 	if (isAbsoluteVersion(version)) {
@@ -253,7 +253,7 @@ export function isNodeVersionReleased(version: NodeVersionInput): boolean {
 export function isNodeVersionCurrent(version: NodeScheduleInput): boolean {
 	if (preloaded === false)
 		throw new Error(
-			'You must await [preloadNodeVersions] prior to using the [isNodeVersionCurrent] filter.'
+			'You must await [preloadNodeVersions] prior to using the [isNodeVersionCurrent] filter.',
 		)
 	const meta = getNodeScheduleInformationSafe(version)
 	if (meta === false) return false
@@ -278,7 +278,7 @@ export function isNodeVersionESM(version: NodeVersionInput): boolean {
 export function isNodeVersionLTS(version: NodeVersionInput): boolean {
 	if (preloaded === false)
 		throw new Error(
-			'You must await [preloadNodeVersions] prior to using the [isNodeVersionLTS] filter.'
+			'You must await [preloadNodeVersions] prior to using the [isNodeVersionLTS] filter.',
 		)
 	if (isAbsoluteVersion(version) && versionCompare(version, '1') >= 0) {
 		const lts = getNodeReleaseInformation(version).lts
@@ -298,7 +298,7 @@ export function isNodeVersionLTS(version: NodeVersionInput): boolean {
 export function isNodeVersionMaintained(version: NodeScheduleInput): boolean {
 	if (preloaded === false)
 		throw new Error(
-			'You must await [preloadNodeVersions] prior to using the [isNodeVersionMaintained] filter.'
+			'You must await [preloadNodeVersions] prior to using the [isNodeVersionMaintained] filter.',
 		)
 	const meta = getNodeScheduleInformationSafe(version)
 	if (meta === false) return false
@@ -315,11 +315,11 @@ export function isNodeVersionMaintained(version: NodeScheduleInput): boolean {
  * Uses the Node.js Schedule API to determine this.
  */
 export function isNodeVersionMaintainedOrLTS(
-	version: NodeScheduleInput
+	version: NodeScheduleInput,
 ): boolean {
 	if (preloaded === false)
 		throw new Error(
-			'You must await [preloadNodeVersions] prior to using the [isNodeVersionMaintainedOrLTS] filter.'
+			'You must await [preloadNodeVersions] prior to using the [isNodeVersionMaintainedOrLTS] filter.',
 		)
 	const meta = getNodeScheduleInformationSafe(version)
 	if (meta === false) return false
@@ -342,7 +342,7 @@ export function isNodeVersionMaintainedOrLTS(
 export function isNodeVersionMaintenance(version: NodeScheduleInput): boolean {
 	if (preloaded === false)
 		throw new Error(
-			'You must await [preloadNodeVersions] prior to using the [isNodeVersionMaintenance] filter.'
+			'You must await [preloadNodeVersions] prior to using the [isNodeVersionMaintenance] filter.',
 		)
 	const meta = getNodeScheduleInformationSafe(version)
 	if (meta === false) return false
@@ -445,7 +445,7 @@ export function getNodeVersionStatus(version: NodeVersionInput) {
 /** Is the node version compatible with these filters? */
 export function isNodeVersion(
 	version: NodeVersionInput,
-	filters: Filters
+	filters: Filters,
 ): boolean {
 	// with params
 	if (filters.these && !isNodeVersionThese(version, filters.these)) return false
@@ -480,29 +480,29 @@ export function isNodeVersion(
 /** Filter the supplied versions */
 export function filterNodeVersions(
 	versions: Array<NodeVersionIdentifier>,
-	filters: Filters
+	filters: Filters,
 ): Array<NodeVersionIdentifier> {
 	return versions.filter((version) => isNodeVersion(version, filters))
 }
 
 /** Filter the significant Node.js versions */
 export function filterSignificantNodeVersions(
-	filters: Filters
+	filters: Filters,
 ): Array<NodeVersionIdentifier> {
 	if (preloaded === false)
 		throw new Error(
-			'You must await [preloadNodeVersions] prior to using [filterSignificantNodeVersions].'
+			'You must await [preloadNodeVersions] prior to using [filterSignificantNodeVersions].',
 		)
 	return filterNodeVersions(getNodeScheduleIdentifiers(), filters)
 }
 
 /** Filter the absolute Node.js versions */
 export function filterAbsoluteNodeVersions(
-	filters: Filters
+	filters: Filters,
 ): Array<NodeVersionIdentifier> {
 	if (preloaded === false)
 		throw new Error(
-			'You must await [preloadNodeVersions] prior to using [filterAbsoluteNodeVersions].'
+			'You must await [preloadNodeVersions] prior to using [filterAbsoluteNodeVersions].',
 		)
 	return filterNodeVersions(getNodeReleaseIdentifiers(), filters)
 }

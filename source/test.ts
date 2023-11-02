@@ -214,7 +214,7 @@ kava.suite('@bevry/nodejs-versions', function (suite, test) {
 					equal(
 						isNodeVersion(version, { [flag]: true }),
 						result,
-						`${version} ${flag} was expected to be ${result}`
+						`${version} ${flag} was expected to be ${result}`,
 					)
 					if (result) {
 						results[flag].push(version)
@@ -229,7 +229,7 @@ kava.suite('@bevry/nodejs-versions', function (suite, test) {
 			equal(
 				actual.join(', '),
 				expected.join(', '),
-				`${flag} results were as expected`
+				`${flag} results were as expected`,
 			)
 			// log for the user
 			// eslint-disable-next-line no-console
