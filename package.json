@@ -138,7 +138,7 @@
     "@bevry/list": "^1.8.0",
     "@bevry/nodejs-releases": "^2.0.0",
     "@bevry/nodejs-schedule": "^2.0.0",
-    "version-compare": "^1.4.0",
+    "version-compare": "^3.2.0",
     "version-range": "^1.4.0"
   },
   "devDependencies": {
