@@ -1,5 +1,10 @@
 # History
 
+## v3.0.0 2023 November 20
+
+-   Updated dependencies, [base files](https://github.com/bevry/base), and [editions](https://editions.bevry.me) using [boundation](https://github.com/bevry/boundation)
+-   Minimum required Node.js version changed from `node: >=10` to `node: >=18` adapting to ecosystem changes
+
 ## v2.4.0 2023 November 2
 
 -   Updated dependencies, [base files](https://github.com/bevry/base), and [editions](https://editions.bevry.me) using [boundation](https://github.com/bevry/boundation)
